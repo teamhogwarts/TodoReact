@@ -14,10 +14,11 @@ class App extends Component {
 
     render() {
         return(
+            <div>
             <h1>ToDo Liste</h1>
-
-        this.state.todos.map((todo) => <ToDoItem todo={todo}/> )
-        );
+                {this.state.todos.map((todo, i) => <ToDoItem key={i} todo={todo}/>)}
+            </div>
+        )
     }
 }
 
