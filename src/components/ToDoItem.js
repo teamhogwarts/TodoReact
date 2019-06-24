@@ -8,7 +8,7 @@ import Button from "reactstrap/es/Button";
 
 
 
-export const ToDoItem = ({todo}) =>
+export const ToDoItem = ({todo, handler}) =>
     <Row>
         <Col sm="6">
             <Card body inverse color="dark" >
@@ -16,7 +16,7 @@ export const ToDoItem = ({todo}) =>
                     <input type="checkbox" checked={todo.isDone}/>
                     <CardTitle>{todo.creator}</CardTitle>
                     <CardText>{todo.text}</CardText>
-                    <Button>Delete</Button>
+                    <Button onClick={() => handler(todo.id)}>Delete</Button>
                 </CardBody>
             </Card>
         </Col>

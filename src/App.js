@@ -17,7 +17,7 @@ class App extends Component {
         return(
             <div>
             <h1>ToDo Liste</h1>
-                {this.state.todos.map((todo, i) => <ToDoItem key={i} todo={todo}/>)}
+                {this.state.todos.map((todo, i) => <ToDoItem key={i} handler={id => this.deleteToDoItem(id)} todo={todo}/>)}
             </div>
         )
     }
@@ -25,13 +25,35 @@ class App extends Component {
     async getAllTodos(){
         try{
             const response = await fetch("http://localhost:8080/toDo/toDos");
-            const todoList = await response.json();
-            this.setState({todos: todoList});
+            if(response.status === 200){
+                const todoList = await response.json();
+                this.setState({todos: todoList});
+            }
+            else{
+                this.setState({todos: []});
+            }
         }
         catch (e) {
             console.error(e);
         }
 
+    }
+
+    async deleteToDoItem(id){
+        try {
+            const request = new Request('http://localhost:8080/toDo/delete/' + id,
+                {method: 'DELETE'});
+            const response = await fetch(request);
+            if(response.status !== 200){
+                throw new Error('Something went wrong on api server!');
+            }
+            else{
+                this.getAllTodos();
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 }
 
