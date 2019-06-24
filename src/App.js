@@ -10,6 +10,7 @@ class App extends Component {
     }
 
     componentDidMount() {
+        this.getAllTodos()
     }
 
     render() {
@@ -19,6 +20,18 @@ class App extends Component {
                 {this.state.todos.map((todo, i) => <ToDoItem key={i} todo={todo}/>)}
             </div>
         )
+    }
+
+    async getAllTodos(){
+        try{
+            const response = await fetch("http://localhost:8080/toDo/toDos");
+            const todoList = await response.json();
+            this.setState({todos: todoList});
+        }
+        catch (e) {
+            console.error(e);
+        }
+
     }
 }
 
