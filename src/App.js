@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import {ToDoItem} from "./components/ToDoItem";
-import {CreateToDoItem} from "./components/CreateToDoItem";
 import {Col, Input, Row} from "reactstrap";
 import Card from "reactstrap/es/Card";
 import CardBody from "reactstrap/es/CardBody";
