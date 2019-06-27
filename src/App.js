@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 
 import {ToDoItem} from "./components/ToDoItem";
-import {Col, Input, Row} from "reactstrap";
-import Card from "reactstrap/es/Card";
-import CardBody from "reactstrap/es/CardBody";
-import CardTitle from "reactstrap/es/CardTitle";
-import Button from "reactstrap/es/Button";
+import {ToDoForm} from "./components/ToDoForm"
 
 
-class App extends Component {
+export default class App extends Component {
 
     state = {
         todos: [],
@@ -16,13 +12,12 @@ class App extends Component {
         text: ''
     }
 
-    creatorHandler(creatorData) {
-        this.setState({creator: creatorData})
-    };
-
-    textHandler(textData) {
-        this.setState({text: textData})
-    };
+    textHandler = (inputVale) => {
+        this.setState({text: inputVale})
+    }
+    creatorHandler = (inputVale) => {
+        this.setState({creator: inputVale})
+    }
 
     componentDidMount() {
         this.getAllTodos()
@@ -32,25 +27,16 @@ class App extends Component {
         return (
             <div>
                 <h1>Eingabe</h1>
-                <Row>
-                    <Col md="6">
-                        <Card body inverse color="dark">
-                            <CardBody>
-                                <CardTitle><strong>ToDo</strong></CardTitle>
-                                <Input type="text"
-                                       placeholder={'Enter creator...'}
-                                       onChange={e => this.creatorHandler(e.target.value)}/>
-                                <Input type="text"
-                                       placeholder={'Enter text...'}
-                                       onChange={e => this.textHandler(e.target.value)}/>
-                                <Button color="dark" onClick={() => this.createToDo()}>Create</Button>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+                <ToDoForm createButton={this.createToDo}
+                          textInput={e => this.textHandler(e)}
+                          creatorInput={e => this.creatorHandler(e)}
+                />
                 <h1>ToDo Liste</h1>
-                {this.state.todos.map((todo, i) => <ToDoItem key={i} handler={id => this.deleteToDoItem(id)}
-                                                             todo={todo}/>)}
+                {this.state.todos.map((todo, i) => <ToDoItem key={i}
+                                                             handler={id => this.deleteToDoItem(id)}
+                                                             todo={todo}
+                    />
+                )}
             </div>
         )
     }
@@ -85,33 +71,32 @@ class App extends Component {
         }
     }
 
-    async createToDo() {
-        try {
-            const todo = {
-                creator: this.state.creator,
-                text: this.state.text
-            };
+    createToDo = async () => {
+         try {
+             const todo = {
+                 creator: this.state.creator,
+                 text: this.state.text
+             };
 
-            const request = new Request('http://localhost:8080/toDo/create',
-                {
-                    method: 'POST',
-                    headers: new Headers({
-                        'Content-Type': 'application/json'
-                    }),
-                    body: JSON.stringify(todo)
-                });
+             const request = new Request('http://localhost:8080/toDo/create',
+                 {
+                     method: 'POST',
+                     headers: new Headers({
+                         'Content-Type': 'application/json'
+                     }),
+                     body: JSON.stringify(todo)
+                 });
 
-            const response = await fetch(request);
+             const response = await fetch(request);
 
-            if (response.status !== 201) {
-                throw new Error('Something went wrong on api server!');
-            } else {
-                this.getAllTodos();
-            }
-        } catch (e) {
-            console.log(e);
-        }
+             if (response.status !== 201) {
+                 throw new Error('Something went wrong on api server!');
+             } else {
+                 this.getAllTodos();
+             }
+         } catch (e) {
+             console.log(e);
+         }
     }
-}
 
-export default App;
+}
