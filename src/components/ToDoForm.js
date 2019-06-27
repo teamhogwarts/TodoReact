@@ -1,10 +1,5 @@
 import React from 'react';
-import {Col, Input, Row} from "reactstrap";
-import Card from "reactstrap/es/Card";
-import CardBody from "reactstrap/es/CardBody";
-import CardTitle from "reactstrap/es/CardTitle";
-import Button from "reactstrap/es/Button";
-
+import {Col, Input, Row, Card, CardBody, CardTitle, Button} from "reactstrap";
 
 
 export const ToDoForm = ({creatorInput, textInput, createButton}) =>

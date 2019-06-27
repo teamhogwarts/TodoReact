@@ -1,11 +1,5 @@
 import React from 'react';
-import {Col, Row} from "reactstrap";
-import Card from "reactstrap/es/Card";
-import CardBody from "reactstrap/es/CardBody";
-import CardTitle from "reactstrap/es/CardTitle";
-import CardText from "reactstrap/es/CardText";
-import Button from "reactstrap/es/Button";
-
+import {Col, Row, Card, CardBody, CardTitle, CardText,Button} from "reactstrap";
 
 
 export const ToDoItem = ({todo, handler}) =>
