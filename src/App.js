@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {Row} from "reactstrap"
 import {ToDoItem} from "./components/ToDoItem";
 import {ToDoForm} from "./components/ToDoForm"
 
@@ -32,11 +32,13 @@ export default class App extends Component {
                           creatorInput={e => this.creatorHandler(e)}
                 />
                 <h1>ToDo Liste</h1>
-                {this.state.todos.map((todo, i) => <ToDoItem key={i}
-                                                             handler={id => this.deleteToDoItem(id)}
-                                                             todo={todo}
-                    />
-                )}
+                <Row>
+                    {this.state.todos.map((todo, i) => <ToDoItem key={i}
+                                                                 handler={id => this.deleteToDoItem(id)}
+                                                                 todo={todo}
+                        />
+                    )}
+                </Row>
             </div>
         )
     }
@@ -72,31 +74,31 @@ export default class App extends Component {
     }
 
     createToDo = async () => {
-         try {
-             const todo = {
-                 creator: this.state.creator,
-                 text: this.state.text
-             };
+        try {
+            const todo = {
+                creator: this.state.creator,
+                text: this.state.text
+            };
 
-             const request = new Request('http://localhost:8080/toDo/create',
-                 {
-                     method: 'POST',
-                     headers: new Headers({
-                         'Content-Type': 'application/json'
-                     }),
-                     body: JSON.stringify(todo)
-                 });
+            const request = new Request('http://localhost:8080/toDo/create',
+                {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify(todo)
+                });
 
-             const response = await fetch(request);
+            const response = await fetch(request);
 
-             if (response.status !== 201) {
-                 throw new Error('Something went wrong on api server!');
-             } else {
-                 this.getAllTodos();
-             }
-         } catch (e) {
-             console.log(e);
-         }
+            if (response.status !== 201) {
+                throw new Error('Something went wrong on api server!');
+            } else {
+                this.getAllTodos();
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 }

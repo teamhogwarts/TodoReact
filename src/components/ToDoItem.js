@@ -1,11 +1,10 @@
 import React from 'react';
-import {Col, Row, Card, CardBody, CardTitle, CardText,Button} from "reactstrap";
+import {Col, Card, CardBody, CardTitle, CardText,Button} from "reactstrap";
 
 
 export const ToDoItem = ({todo, handler}) =>
-    <Row>
         <Col sm="6">
-            <Card body inverse color="dark" >
+            <Card body inverse color="dark" className="m-1 p-0" >
                 <CardBody>
                     <input type="checkbox" checked={todo.isDone}/>
                     <CardTitle>{todo.creator}</CardTitle>
@@ -13,5 +12,4 @@ export const ToDoItem = ({todo, handler}) =>
                     <Button onClick={() => handler(todo.id)}>Delete</Button>
                 </CardBody>
             </Card>
-        </Col>
-    </Row>;
+        </Col>;

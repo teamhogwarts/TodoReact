@@ -16,7 +16,7 @@ export const ToDoForm = ({creatorInput, textInput, createButton}) =>
                            placeholder={'Enter text...'}
                            onChange={e => textInput(e.target.value)}
                     />
-                    <Button color="dark" onClick={() => createButton()}>Create</Button>
+                    <Button color="primary" onClick={() => createButton()}>Create</Button>
                 </CardBody>
             </Card>
         </Col>
