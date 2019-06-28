@@ -51,7 +51,7 @@ export default class App extends Component {
                 const todoList = await response.json();
                 this.setState({todos: todoList});
             } else {
-                this.setState({todos: []});
+                throw new Error('Something went wrong on api server!');
             }
         } catch (e) {
             console.error(e);
@@ -60,15 +60,16 @@ export default class App extends Component {
 
     async deleteToDoItem(id) {
         try {
-            const request = new Request('http://localhost:8080/toDo/delete/' + id,
+            const request = new Request(
+                'http://localhost:8080/toDo/delete/' + id,
                 {method: 'DELETE'});
 
             const response = await fetch(request);
 
-            if (response.status !== 200) {
-                throw new Error('Something went wrong on api server!');
-            } else {
+            if (response.ok) {
                 this.getAllTodos();
+            } else {
+                throw new Error('Something went wrong on api server!');
             }
         } catch (e) {
             console.log(e);
@@ -93,10 +94,11 @@ export default class App extends Component {
 
             const response = await fetch(request);
 
-            if (response.status !== 201) {
-                throw new Error('Something went wrong on api server!');
-            } else {
+            if (response.status === 201) { // 201 stands for CREATED
                 this.getAllTodos();
+            } else {
+                throw new Error('Something went wrong on api server!');
+
             }
         } catch (e) {
             console.log(e);
